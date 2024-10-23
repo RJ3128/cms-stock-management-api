@@ -6,11 +6,5 @@ COPY package.json .
 RUN npm install
 COPY . .
 
-ENV APP_PORT=3000
-ENV SERVER_IP=178.128.198.86
-ENV SERVER_USER=cmsadmin
-ENV SERVER_PASSWORD=49ysEC9F7Uw
-ENV JWT_SECRET=ruljJgel1837JdchUH83lj9i
-
 EXPOSE 3000
 CMD ["node", "server.js"]
