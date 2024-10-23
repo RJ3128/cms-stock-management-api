@@ -1,14 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const config = require('./config.json');
 const cors = require('cors');
 const stockRoutes = require('./routes/stockManagement/stockManagement.routes');
 
 const app = express();
-const port = config.appPort;
-const serverUser = config.serverUser;
-const serverPassword = config.serverPassword;
-const serverIp = config.serverIp;
+const port = process.env.APP_PORT;
+const serverUser = process.env.SERVER_USER;
+const serverPassword = process.env.SERVER_PASSWORD;
+const serverIp = process.env.SERVER_IP;
 const mongoURI = `mongodb://${serverUser}:${serverPassword}@${serverIp}:27017/cms_stock_database`;
 
 app.use(cors());
