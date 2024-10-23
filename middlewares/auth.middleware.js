@@ -6,10 +6,12 @@ const authMiddleware = (req, res, next) => {
     if (!token) return res.status(401).json({ message: 'Token needed for authentication' });
 
     try {
-
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded;
     } catch (error) {
         return res.status(401).json({ message: 'Invalid Token' });
     }
-
-
+    return next();
 };
+
+module.exports = authMiddleware;
