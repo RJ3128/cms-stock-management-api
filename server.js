@@ -1,14 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const config = require('./config.json');
 const cors = require('cors');
 const stockRoutes = require('./routes/stockManagement/stockManagement.routes');
 
 const app = express();
-const port = 3000;
+const port = config.appPort;
+const serverUser = config.serverUser;
+const serverPassword = config.serverPassword;
+const serverIp = config.serverIp;
+const mongoURI = `mongodb://${serverUser}:${serverPassword}@${serverIp}:27017/cms_stock_database`;
 
 app.use(cors());
 app.use(express.json());
-const mongoURI = 'mongodb://cmsadmin:49ysEC9F7Uw@178.128.198.86:27017/cms_stock_database';
 
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))

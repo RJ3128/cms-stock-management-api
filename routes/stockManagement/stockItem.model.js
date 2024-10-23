@@ -16,6 +16,6 @@ const stockItemSchema = new mongoose.Schema({
     dateUpdated: { type: Date, default: Date.now }
 });
 
-const StockItem = mongoose.model('Stock_items', stockItemSchema);
+const StockItem = mongoose.model('Stock_item', stockItemSchema);
 
 module.exports = StockItem;

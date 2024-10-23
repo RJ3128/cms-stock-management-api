@@ -1,0 +1,7 @@
+{
+    "appPort": 3000,
+    "serverIp": "178.128.198.86",
+    "serverUser": "cmsadmin",
+    "serverPassword": "49ysEC9F7Uw",
+    "jwtSecret": "ruljJgel1837JdchUH83lj9i"
+}
