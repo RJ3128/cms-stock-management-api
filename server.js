@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const stockRoutes = require('./routes/stockManagement/stockManagement.routes');
 const userRoutes = require('./routes/users/user.routes');
+const https = require('https');
+const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
@@ -15,6 +17,11 @@ const mongoURI = `mongodb://${serverUser}:${serverPassword}@${serverIp}:27017/cm
 app.use(cors());
 app.use(express.json());
 
+
+app.get('/', (req, res) => {
+    res.send('Hello from Express API');
+});
+
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
@@ -22,6 +29,20 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use('/user', userRoutes);
 app.use('/stock-management', stockRoutes);
 
-app.listen(port, '0.0.0.0', () => {
-    console.log(`Server is running on port ${port}`);
-});
+const isProduction = process.env.NODE_ENV === 'production';
+
+if (isProduction) {
+    const sslOptions = {
+        key: fs.readFileSync('/etc/letsencrypt/live/leaf-sheep.co.za/privkey.pem'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/leaf-sheep.co.za/fullchain.pem')
+    };
+
+    https.createServer(sslOptions, app).listen(443, () => {
+        console.log('Express API is running securely on https://leaf-sheep.co.za');
+    });
+} else {
+
+    app.listen(port, '0.0.0.0', () => {
+        console.log(`Server is running on port ${port} (HTTP)`);
+    });
+}
