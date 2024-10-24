@@ -6,7 +6,7 @@ const authMiddleware = require('../../middlewares/auth.middleware');
 router.get(
     '/get-all-stock-items',
     //!! Implement Middleware after testing
-    // authMiddleware, 
+    // authMiddleware,
     stockController.getAllStockItems
 );
 

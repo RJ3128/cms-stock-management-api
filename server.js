@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const stockRoutes = require('./routes/stockManagement/stockManagement.routes');
+const userRoutes = require('./routes/users/user.routes');
 require('dotenv').config();
 
 const app = express();
@@ -18,6 +19,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
 
+app.use('/user', userRoutes);
 app.use('/stock-management', stockRoutes);
 
 app.listen(port, '0.0.0.0', () => {
