@@ -37,7 +37,7 @@ if (isProduction) {
         cert: fs.readFileSync('/etc/letsencrypt/live/leaf-sheep.co.za/fullchain.pem')
     };
 
-    https.createServer(sslOptions, app).listen(443, () => {
+    https.createServer(sslOptions, app).listen(3000, () => {
         console.log('Express API is running securely on https://leaf-sheep.co.za');
     });
 } else {
