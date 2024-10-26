@@ -2,12 +2,12 @@ const StockItem = require('../../models/stockItem.model');
 const stockManagementService = require('../stockManagement/stockManagement.service');
 
 
-async function getAllStockItems(req, res) {
+async function getAllStock(req, res) {
     try {
-        const stockItems = await StockItem.find();
-        res.status(200).json(stockItems);
+        const stockItems = await stockManagementService.getAllStock();
+        res.json(stockItems);
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching stock items', error });
+        res.json({ message: 'Error fetching stock items', error });
     }
 };
 
@@ -21,6 +21,6 @@ async function createStockItem(req, res) {
 }
 
 module.exports = {
-    getAllStockItems,
+    getAllStock,
     createStockItem
 };

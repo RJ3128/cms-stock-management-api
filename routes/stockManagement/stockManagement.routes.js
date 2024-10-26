@@ -4,9 +4,9 @@ const stockController = require('./stockManagement.controller');
 const authMiddleware = require('../../middlewares/auth.middleware');
 
 router.get(
-    '/get-all-stock-items',
+    '/get-all-stock',
     authMiddleware,
-    stockController.getAllStockItems
+    stockController.getAllStock
 );
 
 router.post(
