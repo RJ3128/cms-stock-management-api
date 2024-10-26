@@ -1,17 +1,16 @@
 const mongoose = require('mongoose');
 
 const stockItemSchema = new mongoose.Schema({
-    regNo: String,
-    make: String,
-    model: String,
-    modelYear: Number,
-    kms: Number,
-    color: String,
-    vin: String,
-    retailPrice: Number,
-    costPrice: Number,
-    accessories: [String],
-    images: [String],
+    regNo: { type: String, required: true, unique: true },
+    make: { type: String, required: true },
+    model: { type: String, required: true },
+    modelYear: { type: String, required: true },
+    kms: { type: Number, required: true },
+    colour: { type: String },
+    vin: { type: String, required: true, unique: true },
+    retailPrice: { type: Number },
+    costPrice: { type: Number },
+    accessories: { type: String },
     dateCreated: { type: Date, default: Date.now },
     dateUpdated: { type: Date, default: Date.now }
 });
