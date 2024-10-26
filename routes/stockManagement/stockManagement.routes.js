@@ -5,16 +5,14 @@ const authMiddleware = require('../../middlewares/auth.middleware');
 
 router.get(
     '/get-all-stock-items',
-    //!! Implement Middleware after testing
     authMiddleware,
     stockController.getAllStockItems
 );
 
 router.post(
     '/create-stock-item',
-    //!! Implement Middleware after testing
     authMiddleware,
-    stockController.getAllStockItems
+    stockController.createStockItem
 );
 
 module.exports = router;

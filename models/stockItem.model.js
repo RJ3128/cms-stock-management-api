@@ -10,7 +10,6 @@ const stockItemSchema = new mongoose.Schema({
     vin: { type: String, required: true, unique: true },
     retailPrice: { type: Number },
     costPrice: { type: Number },
-    accessories: { type: String },
     dateCreated: { type: Date, default: Date.now },
     dateUpdated: { type: Date, default: Date.now }
 });
