@@ -3,27 +3,37 @@ const StockImages = require('../../models/stockImages.model');
 const Accessories = require('../../models/accessories.model');
 
 async function createStockItem(newStock) {
-    const { stockItem, stockImages } = newStock;
-    const accessories = stockItem.accessories;
 
-    let newStockItem = new StockItems(stockItem);
-    newStockItem = await newStockItem.save();
+    try {
 
-    const stockItemId = newStockItem._id.toString();
-    stockImages.stockId = stockItemId;
+        const { stockItem, stockImages } = newStock;
+        const accessories = stockItem.accessories;
 
-    let newStockImages = new StockImages(stockImages);
-    newStockImages = await newStockImages.save();
+        let newStockItem = new StockItems(stockItem);
+        newStockItem = await newStockItem.save();
 
-    const accessoriesObj = {
-        stockId: stockItemId,
-        accessories: accessories,
-    };
+        const stockItemId = newStockItem._id.toString();
+        stockImages.stockId = stockItemId;
 
-    let newAccessories = new Accessories(accessoriesObj);
-    newAccessories = await newAccessories.save();
+        if (stockImages) {
+            let newStockImages = new StockImages(stockImages);
+            newStockImages = await newStockImages.save();
+        }
 
-    return newStockItem;
+        if (accessories) {
+            const accessoriesObj = {
+                stockId: stockItemId,
+                accessories: accessories,
+            };
+
+            let newAccessories = new Accessories(accessoriesObj);
+            newAccessories = await newAccessories.save();
+        }
+        return newStockItem;
+
+    } catch (err) {
+        throw (err);
+    }
 }
 
 module.exports = {

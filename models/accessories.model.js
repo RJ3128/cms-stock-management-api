@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 const accessoriesSchema = new mongoose.Schema({
-    stockId: { type: String, required: true, unique: true },
+    stockId: { type: String, required: true },
     accessories: { type: String },
 });
 

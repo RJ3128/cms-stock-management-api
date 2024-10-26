@@ -14,9 +14,9 @@ async function getAllStockItems(req, res) {
 async function createStockItem(req, res) {
     try {
         const newStockItem = await stockManagementService.createStockItem(req.body);
-        return res.status(201).json(newStockItem);
+        return res.json(newStockItem);
     } catch (error) {
-        return res.status(500).json({ message: 'Error saving stock item', error });
+        return res.json({ message: error.message, error });
     }
 }
 
