@@ -28,7 +28,17 @@ async function authenticate(userCredentials) {
     return token;
 }
 
+async function getUsers() {
+    return await User.find();
+}
+
+async function deleteUser(userId) {
+    return await User.deleteOne({ _id: userId });
+}
+
 module.exports = {
     createUser,
-    authenticate
+    authenticate,
+    getUsers,
+    deleteUser
 };
