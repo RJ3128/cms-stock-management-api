@@ -124,9 +124,31 @@ async function updateStockItem(payload, stockId) {
     }
 }
 
+async function deleteStockItem(stockId) {
+
+    console.log('STOCK ID: ', stockId);
+
+    const deletedStockItem = await StockItems.deleteOne({ _id: stockId });
+
+    if (!deletedStockItem) {
+        throw new Error('Stock item not found');
+    }
+
+    await StockImages.deleteOne(
+        { stockId: stockId }
+    );
+
+    await Accessories.deleteOne(
+        { stockId: stockId },
+    );
+
+    return stockId;
+}
+
 
 module.exports = {
     createStockItem,
     getAllStock,
-    updateStockItem
+    updateStockItem,
+    deleteStockItem
 };

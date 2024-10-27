@@ -21,4 +21,10 @@ router.put(
     stockController.updateStockItem
 );
 
+router.delete(
+    '/delete-stock-item/:stockId',
+    authMiddleware,
+    stockController.deleteStockItem
+);
+
 module.exports = router;

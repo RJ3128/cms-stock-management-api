@@ -29,8 +29,18 @@ async function updateStockItem(req, res) {
     }
 }
 
+async function deleteStockItem(req, res) {
+    try {
+        const deletedStockItem = await stockManagementService.deleteStockItem(req.params.stockId);
+        return res.json(deletedStockItem);
+    } catch (error) {
+        return res.json({ message: error.message, error });
+    }
+}
+
 module.exports = {
     getAllStock,
     createStockItem,
     updateStockItem,
+    deleteStockItem
 };
