@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const stockRoutes = require('./routes/stockManagement/stockManagement.routes');
 const userRoutes = require('./routes/users/user.routes');
-require('dotenv').config();
+const dotenv = require('dotenv');
 
 const envFile = process.env.NODE_ENV === 'production' ? '.env.prod' : '.env';
 dotenv.config({ path: envFile });
