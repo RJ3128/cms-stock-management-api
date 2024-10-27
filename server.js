@@ -15,7 +15,14 @@ const serverPassword = process.env.SERVER_PASSWORD;
 const serverIp = process.env.SERVER_IP;
 const mongoURI = `mongodb://${serverUser}:${serverPassword}@${serverIp}:27017/cms_stock_database`;
 
-app.use(cors());
+const corsOptions = {
+    origin: 'http://localhost:4200',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
