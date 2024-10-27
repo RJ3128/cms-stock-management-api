@@ -20,7 +20,17 @@ async function createStockItem(req, res) {
     }
 }
 
+async function updateStockItem(req, res) {
+    try {
+        const updatedStockItem = await stockManagementService.updateStockItem(req.body, req.params.stockId);
+        return res.json(updatedStockItem);
+    } catch (error) {
+        return res.json({ message: error.message, error });
+    }
+}
+
 module.exports = {
     getAllStock,
-    createStockItem
+    createStockItem,
+    updateStockItem,
 };

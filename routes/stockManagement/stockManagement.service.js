@@ -2,40 +2,6 @@ const StockItems = require('../../models/stockItem.model');
 const StockImages = require('../../models/stockImages.model');
 const Accessories = require('../../models/accessories.model');
 
-async function createStockItem(newStock) {
-
-    try {
-
-        const { stockItem, stockImages } = newStock;
-        const accessories = stockItem.accessories;
-
-        let newStockItem = new StockItems(stockItem);
-        newStockItem = await newStockItem.save();
-
-        const stockItemId = newStockItem._id.toString();
-        stockImages.stockId = stockItemId;
-
-        if (stockImages) {
-            let newStockImages = new StockImages(stockImages);
-            newStockImages = await newStockImages.save();
-        }
-
-        if (accessories) {
-            const accessoriesObj = {
-                stockId: stockItemId,
-                accessories: accessories,
-            };
-
-            let newAccessories = new Accessories(accessoriesObj);
-            newAccessories = await newAccessories.save();
-        }
-        return newStockItem;
-
-    } catch (err) {
-        throw (err);
-    }
-}
-
 async function getAllStock() {
     try {
         const stockItems = await StockItems.aggregate([
@@ -73,8 +39,8 @@ async function getAllStock() {
             },
             {
                 $addFields: {
-                    stockImages: { $arrayElemAt: ['$stockImages', 0] }, // Extract first element
-                    accessories: { $arrayElemAt: ['$accessories', 0] }  // Extract first element
+                    stockImages: { $arrayElemAt: ['$stockImages', 0] },
+                    accessories: { $arrayElemAt: ['$accessories', 0] }
                 }
             }
         ]);
@@ -87,7 +53,80 @@ async function getAllStock() {
     }
 }
 
+async function createStockItem(newStock) {
+
+    try {
+
+        const { stockItem, stockImages } = newStock;
+        const accessories = stockItem.accessories;
+
+        let newStockItem = new StockItems(stockItem);
+        newStockItem = await newStockItem.save();
+
+        const stockItemId = newStockItem._id.toString();
+        stockImages.stockId = stockItemId;
+
+        if (stockImages) {
+            let newStockImages = new StockImages(stockImages);
+            newStockImages = await newStockImages.save();
+        }
+
+        if (accessories) {
+            const accessoriesObj = {
+                stockId: stockItemId,
+                accessories: accessories,
+            };
+
+            let newAccessories = new Accessories(accessoriesObj);
+            newAccessories = await newAccessories.save();
+        }
+        return newStockItem;
+
+    } catch (err) {
+        throw (err);
+    }
+}
+
+async function updateStockItem(payload, stockId) {
+    try {
+        const newStockItem = payload.stockItem;
+        const newStockImages = payload.stockImages;
+        const newAccessories = payload.stockItem.accessories;
+
+        let existingStockItem = await StockItems.findById(stockId);
+        if (!existingStockItem) {
+            throw new Error(`Stock item NOT found.`);
+        }
+
+
+        await StockItems.findByIdAndUpdate(
+            stockId,
+            newStockItem
+        );
+
+        await StockImages.findOneAndUpdate(
+            { stockId: stockId },
+            newStockImages
+        );
+
+
+        await Accessories.findOneAndUpdate(
+            { stockId: stockId.toString() },
+            { accessories: newAccessories }
+        );
+
+        return {
+            success: true
+        };
+
+    } catch (err) {
+        throw (err);
+    }
+}
+
+
 module.exports = {
     createStockItem,
-    getAllStock
+    getAllStock,
+    updateStockItem
 };

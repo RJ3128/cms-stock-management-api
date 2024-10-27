@@ -15,4 +15,10 @@ router.post(
     stockController.createStockItem
 );
 
+router.put(
+    '/update-stock-item/:stockId',
+    authMiddleware,
+    stockController.updateStockItem
+);
+
 module.exports = router;
