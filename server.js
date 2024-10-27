@@ -5,6 +5,9 @@ const stockRoutes = require('./routes/stockManagement/stockManagement.routes');
 const userRoutes = require('./routes/users/user.routes');
 require('dotenv').config();
 
+const envFile = process.env.NODE_ENV === 'production' ? '.env.prod' : '.env';
+dotenv.config({ path: envFile });
+
 const app = express();
 const port = process.env.APP_PORT;
 const serverUser = process.env.SERVER_USER;
