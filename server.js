@@ -16,7 +16,7 @@ const serverIp = process.env.SERVER_IP;
 const mongoURI = `mongodb://${serverUser}:${serverPassword}@${serverIp}:27017/cms_stock_database`;
 
 const corsOptions = {
-    origin: 'http://localhost:4200',
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204
